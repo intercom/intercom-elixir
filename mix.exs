@@ -5,8 +5,10 @@ defmodule Intercom.Mixfile do
     [app: :intercom,
      version: "0.0.1",
      elixir: "~> 1.2",
+     description: description(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     package: package(),
      deps: deps]
   end
 
@@ -29,8 +31,21 @@ defmodule Intercom.Mixfile do
   defp deps do
     [
       {:estree, "~> 2.3"},
-      {:httpoison, "~> 0.8.0"},
-      {:credo, "~> 0.4", only: [:dev, :test]}
+      {:httpoison, "~> 0.8.0"}
     ]
+  end
+
+  defp description do
+    "Elixir helpers for generating the Intercom snippet and interacting with the Intercom API"
+  end
+
+  defp package do
+    [
+      name: :intercom,
+      files: ["lib", "priv", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+      maintainers: ["Bob Long"],
+      licenses: ["Apache 2.0"],
+      links: %{"GitHub" => "https://github.com/intercom/intercom-elixir",
+               "Docs" => "https://github.com/intercom/intercom-elixir"}]
   end
 end
