@@ -53,6 +53,20 @@ Intercom.Client.start
 Intercom.Client.get!(
   "/users",
   [],
+  hackney: Intercom.Client.auth("<personal access token>", "")
+)
+```
+
+or
+
+```elixir
+require Intercom.Client
+
+Intercom.Client.start
+
+Intercom.Client.get!(
+  "/users",
+  [],
   hackney: Intercom.Client.auth("<app id>", "<api key>")
 )
 ```
