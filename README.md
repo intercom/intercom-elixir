@@ -70,6 +70,7 @@ Intercom.Client.get!(
   hackney: Intercom.Client.auth("<app id>", "<api key>")
 )
 ```
+> Warning: API Keys are being deprecated - you should use a [personal access token](https://app.intercom.io/a/apps/_/settings/personal-access-token) instead. [Learn more](https://developers.intercom.io/docs/personal-access-tokens) about API Keys deprecation
 
 
 # Pull Requests
