@@ -9,14 +9,14 @@ defmodule Intercom.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      package: package(),
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -30,8 +30,8 @@ defmodule Intercom.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:estree, "~> 2.3.0"},
-      {:httpoison, "~> 0.8"}
+      {:estree, "~> 2.5.0"},
+      {:httpoison, "~> 0.11.0"}
     ]
   end
 

@@ -1,6 +1,5 @@
 defmodule IntercomEscapingTest do
   use ExUnit.Case
-  alias ESTree.Tools.Generator
   require Intercom.Escaping
 
   test "escaping dangerous characters" do
