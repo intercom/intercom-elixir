@@ -6,7 +6,7 @@ defmodule Intercom.API.Request do
   end
 
   def make_request(:post, url, headers, body) do
-    @http_adapter.post(url, body, headers, []) |> parse_response()
+    @http_adapter.post(url, Jason.encode!(body), headers, []) |> parse_response()
   end
 
   defp parse_response({:ok, %HTTPoison.Response{status_code: 200, body: body} = response}) do

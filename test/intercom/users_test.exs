@@ -5,7 +5,7 @@ defmodule Intercom.UsersTest do
   @module Intercom.Users
   @http_adapter Application.get_env(:intercom, :http_adapter)
   @api_endpoint "https://api.intercom.io/"
-  @json_body "{\"user_id\": \"a25\"}"
+  @json_body "{\"user_id\":\"a25\"}"
   @success_response %HTTPoison.Response{status_code: 200, body: @json_body}
   @body %{"user_id" => "a25"}
 
@@ -30,7 +30,7 @@ defmodule Intercom.UsersTest do
 
   describe "upsert/1" do
     test "calls correct rest endpoint" do
-      expect(@http_adapter, :post, fn "#{@api_endpoint}users", @body, _headers, _options -> {:ok, @success_response} end)
+      expect(@http_adapter, :post, fn "#{@api_endpoint}users", @json_body, _headers, _options -> {:ok, @success_response} end)
       assert @module.upsert(@body) == {:ok, @body}
     end
   end

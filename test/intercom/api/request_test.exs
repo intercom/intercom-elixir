@@ -6,7 +6,8 @@ defmodule Intercom.API.RequestTest do
   @http_adapter Application.get_env(:intercom, :http_adapter)
   @url "https://example.com/users"
   @headers ["Authorization": "Bearer abcde"]
-  @json_body "{\"user_id\": 25}"
+  @json_body "{\"user_id\":25}"
+  @body %{"user_id" => 25}
 
   setup :verify_on_exit!
 
@@ -18,12 +19,12 @@ defmodule Intercom.API.RequestTest do
 
     test "with :post method makes call to HTTPoison post" do
       expect(@http_adapter, :post, fn @url, @json_body, @headers, [] -> {:ok, nil} end)
-      @module.make_request(:post, @url, @headers, @json_body)
+      @module.make_request(:post, @url, @headers, @body)
     end
 
     test "returns map of parsed JSON body when JSON returned with 200 response" do
       expect(@http_adapter, :get, fn @url, @headers, [] -> {:ok, %HTTPoison.Response{status_code: 200, body: @json_body}} end)
-      assert @module.make_request(:get, @url, @headers, nil) == {:ok, %{"user_id" => 25}}
+      assert @module.make_request(:get, @url, @headers, nil) == {:ok, @body}
     end
 
     test "returns error with response data if status_code is not 200" do
@@ -39,6 +40,11 @@ defmodule Intercom.API.RequestTest do
     test "passes errors through from HTTPoison" do
       expect(@http_adapter, :get, fn @url, @headers, [] -> {:error, %HTTPoison.Error{id: nil, reason: :econnrefused}} end)
       assert @module.make_request(:get, @url, @headers, nil) == {:error, %HTTPoison.Error{id: nil, reason: :econnrefused}}
+    end
+
+    test "encodes body as JSON in post request" do
+      expect(@http_adapter, :post, fn @url, @json_body, @headers, [] -> {:ok, %HTTPoison.Response{status_code: 200, body: @json_body}} end)
+      assert @module.make_request(:post, @url, @headers, @body) == {:ok, @body}
     end
   end
 end
