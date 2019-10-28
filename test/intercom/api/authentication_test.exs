@@ -5,6 +5,7 @@ defmodule Intercom.API.AuthenticationTest do
 
   setup do
     access_token = Application.get_env(:intercom, :access_token)
+
     on_exit(fn ->
       Application.put_env(:intercom, :access_token, access_token)
     end)
