@@ -5,8 +5,9 @@ defmodule Intercom.API.AuthenticationTest do
   @module Intercom.API.Authentication
 
   setup do
+    access_token = Application.get_env(:intercom, :access_token)
     on_exit(fn ->
-      Application.delete_env(:intercom, :access_token)
+      Application.put_env(:intercom, :access_token, access_token)
     end)
   end
 
@@ -17,6 +18,7 @@ defmodule Intercom.API.AuthenticationTest do
     end
 
     test "returns correct error message when access token isn't set" do
+      Application.delete_env(:intercom, :access_token)
       assert @module.get_access_token() == {:error, :no_access_token}
     end
 

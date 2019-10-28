@@ -6,8 +6,9 @@ defmodule Intercom.API.RestTest do
   @valid_access_token "abcde"
 
   setup do
+    access_token = Application.get_env(:intercom, :access_token)
     on_exit(fn ->
-      Application.delete_env(:intercom, :access_token)
+      Application.put_env(:intercom, :access_token, access_token)
     end)
   end
 
@@ -19,12 +20,11 @@ defmodule Intercom.API.RestTest do
 
   describe "authorized_headers/0" do
     test "puts access token into authorization header" do
-      Application.put_env(:intercom, :access_token, @valid_access_token)
-
       assert @module.authorized_headers() == {:ok, [Authorization: "Bearer #{@valid_access_token}", Accept: "application/json"]}
     end
 
     test "returns errors from getting access token" do
+      Application.delete_env(:intercom, :access_token)
       assert @module.authorized_headers() == {:error, :no_access_token}
     end
   end
