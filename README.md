@@ -1,79 +1,21 @@
-# Intercom snippet
+# Intercom
 
-Intercom can be installed in your web app to help you chat to logged-in and logged-out users.
+**TODO: Add description**
 
-[Full configuration options can be found here](https://docs.intercom.io/configure-intercom-for-your-product-or-site/customize-the-intercom-messenger/the-intercom-javascript-api).
+## Installation
 
-```elixir
-require Intercom
-
-# Generate the full Intercom snippet
-Intercom.snippet(
-  %{email: "your_data@example.com"}, # Key value pairs identifying your user.
-  app_id: "<your app id>", # Your app's identifier.
-  secret: "<your secret key>" # Your app's secret key. This enables secure mode https://docs.intercom.io/configure-intercom-for-your-product-or-site/staying-secure/enable-secure-mode-on-your-web-product
-)
-```
-
-For example, this shows how to generate the web snippet in a [Phoenix](http://www.phoenixframework.org/) web app:
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `intercom` to your list of dependencies in `mix.exs`:
 
 ```elixir
-defmodule HelloPhoenix.PageController do
-  use HelloPhoenix.Web, :controller
-  require Intercom
-
-  plug :intercom
-
-  def index(conn, _params) do
-    # Intercom injectable via <%= raw @intercom %>
-    render conn, "index.html"
-  end
-
-  defp intercom(conn, _params) do
-    {:ok, snippet} = Intercom.snippet(
-      %{email: "bob@foo.com"},
-      app_id: "<your app id>",
-      secret: "<your secret>"
-    )
-    assign(conn, :intercom, snippet)
-  end
+def deps do
+  [
+    {:intercom, "~> 0.1.0"}
+  ]
 end
 ```
 
-# Intercom REST API:
+Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+be found at [https://hexdocs.pm/intercom](https://hexdocs.pm/intercom).
 
-
-The Intercom [REST API](https://developers.intercom.io/) provides full access to Intercom resources. This library provides a thin wrapper over [httpoison](https://github.com/edgurgel/httpoison):
-
-```elixir
-require Intercom.Client
-
-Intercom.Client.start
-
-Intercom.Client.get!(
-  "/users",
-  [],
-  hackney: Intercom.Client.auth("<personal access token>", "")
-)
-```
-
-If you already have an access token you can find it [here](https://app.intercom.com/developers/_). If you want to create or learn more about access tokens then you can find more info [here](https://developers.intercom.io/docs/personal-access-tokens)
-
-If you are building a third party application you will need to use OAuth by following the steps in [setting-up-oauth](https://developers.intercom.io/page/setting-up-oauth) for Intercom.
-
-
-# Pull Requests
-
-- **Add tests!** Your patch won't be accepted if it doesn't have tests.
-
-- **Document any change in behaviour**. Make sure the README and any other
-  relevant documentation are kept up-to-date.
-
-- **Create topic branches**. Don't ask us to pull from your master branch.
-
-- **One pull request per feature**. If you want to do more than one thing, send
-  multiple pull requests.
-
-- **Send coherent history**. Make sure each individual commit in your pull
-  request is meaningful. If you had to make multiple intermediate commits while
-  developing, please squash them before sending them to us.
