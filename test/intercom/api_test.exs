@@ -6,6 +6,9 @@ defmodule Intercom.APITest do
   @module Intercom.API
   @http_adapter Application.get_env(:intercom, :http_adapter)
   @valid_access_token "abcde"
+  @json_body "{\"user_id\": 25}"
+  @success_response %HTTPoison.Response{status_code: 200, body: @json_body}
+  @parsed_body %{"user_id" => 25}
 
   setup :verify_on_exit!
 
@@ -18,16 +21,16 @@ defmodule Intercom.APITest do
   describe "call_endpoint/3" do
     test "makes authorized get requests" do
       Application.put_env(:intercom, :access_token, @valid_access_token)
-      expect(@http_adapter, :get, fn _url, _headers, _options -> {:ok, nil} end)
+      expect(@http_adapter, :get, fn _url, _headers, _options -> {:ok, @success_response} end)
 
-      assert @module.call_endpoint(:get, "users") == {:ok, nil}
+      assert @module.call_endpoint(:get, "users") == {:ok, @parsed_body}
     end
 
     test "makes authorized post requests" do
       Application.put_env(:intercom, :access_token, @valid_access_token)
-      expect(@http_adapter, :post, fn _url, _body, _headers, _options -> {:ok, nil} end)
+      expect(@http_adapter, :post, fn _url, _body, _headers, _options -> {:ok, @success_response} end)
 
-      assert @module.call_endpoint(:post, "users", "{\"user_id\": 25}") == {:ok, nil}
+      assert @module.call_endpoint(:post, "users", "{\"user_id\": 25}") == {:ok, @parsed_body}
     end
 
     test "returns error messages for known errors" do

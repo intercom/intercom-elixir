@@ -23,6 +23,7 @@ defmodule Intercom.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.6.1"},
+      {:jason, "~> 1.1"},
       {:mox, "~> 0.5", only: :test}
     ]
   end
