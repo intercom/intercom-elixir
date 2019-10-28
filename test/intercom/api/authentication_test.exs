@@ -1,6 +1,5 @@
 defmodule Intercom.API.AuthenticationTest do
   use ExUnit.Case, async: false
-  doctest Intercom
 
   @module Intercom.API.Authentication
 

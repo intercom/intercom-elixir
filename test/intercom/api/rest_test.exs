@@ -1,6 +1,5 @@
 defmodule Intercom.API.RestTest do
   use ExUnit.Case, async: false
-  doctest Intercom
 
   @module Intercom.API.Rest
   @valid_access_token "abcde"

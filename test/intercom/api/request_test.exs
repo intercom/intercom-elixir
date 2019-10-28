@@ -1,7 +1,6 @@
 defmodule Intercom.API.RequestTest do
   use ExUnit.Case
   import Mox
-  doctest Intercom
 
   @module Intercom.API.Request
   @http_adapter Application.get_env(:intercom, :http_adapter)
