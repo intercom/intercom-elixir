@@ -1,4 +1,9 @@
 defmodule Intercom.API do
+  @type success :: {:ok, map()}
+  @type error :: {:error, atom() | %HTTPoison.Error{}, String.t() | nil}
+  @type response :: success | error
+
+  @spec call_endpoint(:get | :post, String.t(), map() | nil) :: response()
   def call_endpoint(method, path, body \\ nil) do
     with url <- Intercom.API.Rest.url(path),
          {:ok, authorized_headers} <- Intercom.API.Rest.authorized_headers(),

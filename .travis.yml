@@ -4,3 +4,4 @@ elixir:
 script:
   - mix test
   - mix format --check-formatted
+  - mix dialyzer

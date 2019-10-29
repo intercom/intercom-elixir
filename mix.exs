@@ -24,7 +24,8 @@ defmodule Intercom.MixProject do
     [
       {:httpoison, "~> 1.6.1"},
       {:jason, "~> 1.1"},
-      {:mox, "~> 0.5", only: :test}
+      {:mox, "~> 0.5", only: :test},
+      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
     ]
   end
 
