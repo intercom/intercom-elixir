@@ -1,81 +1,59 @@
 defmodule Intercom.UsersTest do
   use ExUnit.Case
-  import Mox
+  import Intercom.APIEndpointTest
 
   @module Intercom.Users
-  @http_adapter Application.get_env(:intercom, :http_adapter)
-  @api_endpoint "https://api.intercom.io/"
-  @json_body "{\"user_id\":\"a25\"}"
-  @success_response %HTTPoison.Response{status_code: 200, body: @json_body}
-  @body %{"user_id" => "a25"}
 
   describe "get/1" do
     test "calls correct rest endpoint" do
-      expect(@http_adapter, :get, fn "#{@api_endpoint}users/a25", _headers, _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.get("a25") == {:ok, @body}
+      assert_rest_endpoint(:get, "users/12345") do
+        @module.get("12345")
+      end
     end
   end
 
   describe "get_by/1" do
     test "calls correct rest endpoint when user_id passed" do
-      expect(@http_adapter, :get, fn "#{@api_endpoint}users?user_id=a25", _headers, _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.get_by(user_id: "a25") == {:ok, @body}
+      assert_rest_endpoint(:get, "users?user_id=12345") do
+        @module.get_by(user_id: "12345")
+      end
     end
   end
 
   describe "upsert/1" do
     test "calls correct rest endpoint" do
-      expect(@http_adapter, :post, fn "#{@api_endpoint}users", @json_body, _headers, _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.upsert(@body) == {:ok, @body}
+      body = %{user_id: "abcde"}
+      assert_rest_endpoint(:post, "users", body) do
+        @module.upsert(body)
+      end
     end
   end
 
   describe "list/0" do
     test "calls correct rest endpoint" do
-      expect(@http_adapter, :get, fn "#{@api_endpoint}users", _headers, _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.list() == {:ok, @body}
+      assert_rest_endpoint(:get, "users") do
+        @module.list()
+      end
     end
   end
 
   describe "list_by/1" do
     test "calls correct rest endpoint when email passed" do
-      expect(@http_adapter, :get, fn "#{@api_endpoint}users?email=bob@bob.com",
-                                     _headers,
-                                     _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.list_by(email: "bob@bob.com") == {:ok, @body}
+      assert_rest_endpoint(:get, "users?email=bob@bob.com") do
+        @module.list_by(email: "bob@bob.com")
+      end
     end
 
     test "calls correct rest endpoint when tag_id passed" do
-      expect(@http_adapter, :get, fn "#{@api_endpoint}users?tag_id=12345", _headers, _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.list_by(tag_id: "12345") == {:ok, @body}
+      assert_rest_endpoint(:get, "users?tag_id=12345") do
+        @module.list_by(tag_id: "12345")
+      end
     end
 
     test "calls correct rest endpoint when segment_id passed" do
-      expect(@http_adapter, :get, fn "#{@api_endpoint}users?segment_id=12345",
-                                     _headers,
-                                     _options ->
-        {:ok, @success_response}
-      end)
-
-      assert @module.list_by(segment_id: "12345") == {:ok, @body}
+      assert_rest_endpoint(:get, "users?segment_id=12345") do
+        @module.list_by(segment_id: "12345")
+      end
     end
   end
 end
