@@ -23,6 +23,7 @@ defmodule Intercom.UsersTest do
   describe "upsert/1" do
     test "calls correct rest endpoint" do
       body = %{user_id: "abcde"}
+
       assert_rest_endpoint(:post, "users", body) do
         @module.upsert(body)
       end

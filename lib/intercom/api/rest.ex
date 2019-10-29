@@ -6,7 +6,12 @@ defmodule Intercom.API.Rest do
   def authorized_headers do
     case Intercom.API.Authentication.get_access_token() do
       {:ok, access_token} ->
-        {:ok, [Authorization: "Bearer #{access_token}", Accept: "application/json", "Content-Type": "application/json"]}
+        {:ok,
+         [
+           Authorization: "Bearer #{access_token}",
+           Accept: "application/json",
+           "Content-Type": "application/json"
+         ]}
 
       {:error, error} ->
         {:error, error}
