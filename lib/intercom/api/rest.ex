@@ -1,4 +1,6 @@
 defmodule Intercom.API.Rest do
+  @moduledoc false
+
   def url(path) do
     "https://api.intercom.io/" <> path
   end

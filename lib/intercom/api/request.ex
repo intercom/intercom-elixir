@@ -1,4 +1,6 @@
 defmodule Intercom.API.Request do
+  @moduledoc false
+
   @http_adapter Application.get_env(:intercom, :http_adapter)
 
   def make_request(:get, url, headers, nil) do

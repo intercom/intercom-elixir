@@ -1,6 +1,6 @@
 defmodule Intercom.UsersTest do
   use ExUnit.Case
-  import Intercom.APIEndpointTest
+  import Intercom.APIEndpoint
 
   @module Intercom.Users
 

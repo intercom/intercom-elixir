@@ -1,4 +1,6 @@
 defmodule Intercom.API.Authentication do
+  @moduledoc false
+
   def get_access_token do
     case Application.get_env(:intercom, :access_token, "") do
       "" -> {:error, :no_access_token}

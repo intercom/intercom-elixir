@@ -1,8 +1,25 @@
 defmodule Intercom.API do
+  @moduledoc """
+  Provides direct access to the Intercom API if other modules in
+  this package don't provide the functionality you need.
+
+  See https://developers.intercom.com/intercom-api-reference/reference
+  """
+
   @type success :: {:ok, map()}
   @type error :: {:error, atom() | %HTTPoison.Error{}, String.t() | nil}
   @type response :: success | error
 
+  @doc """
+  Call an Intercom API endpoint.
+
+  Arguments:
+  - `method`: The HTTP request method.
+  - `path`: The request path, e.g `"users/1234"`.
+  - `body`: The body of the request. Optional.
+
+  Returns `{:ok, data}` or `{:error, error, message}`.
+  """
   @spec call_endpoint(:get | :post, String.t(), map() | nil) :: response()
   def call_endpoint(method, path, body \\ nil) do
     with url <- Intercom.API.Rest.url(path),

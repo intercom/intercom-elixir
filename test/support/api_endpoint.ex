@@ -1,4 +1,4 @@
-defmodule Intercom.APIEndpointTest do
+defmodule Intercom.APIEndpoint do
   import Mox
 
   defmacro assert_rest_endpoint(method, path, body \\ nil, do: yield) do

@@ -1,5 +1,9 @@
 defmodule Intercom.Users do
-  @type list_by_option :: :email | :tag_id | :segment_id
+  @moduledoc """
+  Provides functionality for managing users.
+
+  See https://developers.intercom.com/intercom-api-reference/reference#users
+  """
 
   @spec get(String.t()) :: Intercom.API.response()
   def get(id) do
@@ -16,7 +20,8 @@ defmodule Intercom.Users do
     Intercom.API.call_endpoint(:get, "users")
   end
 
-  @spec list_by([{list_by_option, String.t()}]) :: Intercom.API.response()
+  @spec list_by([{:email, String.t()}] | [{:tag_id, String.t()}] | [{:segment_id, String.t()}]) ::
+          Intercom.API.response()
   def list_by(email: email) do
     Intercom.API.call_endpoint(:get, "users?email=#{email}")
   end
