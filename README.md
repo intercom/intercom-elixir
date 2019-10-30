@@ -31,6 +31,25 @@ config :intercom,
 
 TODO: Generate documentation with [ex_doc](https://github.com/elixir-lang/ex_doc), publish to hexdocs.pm and reference here.
 
+This library provides functions for easy access to API endpoints. For example, [User](https://developers.intercom.com/intercom-api-reference/reference#users) endpoints can be accessed like this:
+
+```elixir
+# Get a user
+{:ok, user} = Intercom.Users.get("a1b2")
+
+# List users by `tag_id`
+{:ok, %{"users" => users}} = Intercom.Users.list_by(tag_id: "a1b2")
+
+# Insert or update a user
+{:ok, upserted_user} = Intercom.Users.upsert(%{id: "a1b2", name: "Steve Buscemi"})
+```
+
+If there are endpoints in the API that aren't currently supported by this library, you can access them manually like this:
+
+```elixir
+{:ok, data} = Intercom.API.call_endpoint(:post, "new_endpoint/a1b2", %{body_data: "here"})
+```
+
 ## Resources
 
 - [Intercom Developer Hub](https://developers.intercom.com/)
