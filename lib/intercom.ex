@@ -38,11 +38,14 @@ defmodule Intercom do
       key ->
         {:ok, case secret do
           nil -> opts
-          _ -> Map.merge(opts, %{:user_hash => :sha256
-            |> :crypto.hmac(secret, Map.fetch!(opts, key))
-            |> Base.encode16
-            |> String.downcase
-          })
+          _ ->
+            Map.merge(opts, %{
+              :user_hash =>
+                :sha256
+                |> hmac(secret, Map.fetch!(opts, key))
+                |> Base.encode16()
+                |> String.downcase()
+              })
         end}
     end
   end
@@ -61,5 +64,11 @@ defmodule Intercom do
         {:ok, base <> Generator.generate(tree) <> ";</script>"}
       x -> x
     end
+  end
+
+  if Code.ensure_loaded?(:crypto) and function_exported?(:crypto, :mac, 4) do
+    defp hmac(digest, key, payload), do: :crypto.mac(:hmac, digest, key, payload)
+  else
+    defp hmac(digest, key, payload), do: :crypto.hmac(digest, key, payload)
   end
 end
