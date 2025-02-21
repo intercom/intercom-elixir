@@ -36,14 +36,18 @@ defmodule Intercom do
     case key do
       {:error, reason} -> {:error, reason}
       key ->
-        {:ok, case secret do
+        user_hash = case secret do
           nil -> opts
-          _ -> Map.merge(opts, %{:user_hash => :sha256
-            |> :crypto.hmac(secret, Map.fetch!(opts, key))
-            |> Base.encode16
-            |> String.downcase
-          })
-        end}
+          _ -> 
+            hashed = 
+              :crypto.mac(:hmac, :sha256, secret, Map.fetch!(opts, key))
+              |> Base.encode16()
+              |> String.downcase()
+
+            Map.merge(opts, %{user_hash: hashed})
+        end
+
+        {:ok, user_hash}
     end
   end
 
